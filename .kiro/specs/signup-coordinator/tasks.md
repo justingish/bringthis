@@ -252,8 +252,8 @@
   - **Property 5: Guest addition permission enforcement**
   - **Validates: Requirements 3.1, 3.2, 3.3**
 
-- [ ] 12. Implement EditSignupPage
-- [ ] 12.1 Create page component for editing signup sheet
+- [x] 12. Implement EditSignupPage
+- [x] 12.1 Create page component for editing signup sheet
 
   - Validate management token from URL params
   - Fetch signup sheet data
@@ -262,12 +262,12 @@
   - Handle unauthorized access (invalid token)
   - _Requirements: 7.1, 7.2, 8.3_
 
-- [ ] 12.2 Write property test for management token authorization
+- [x] 12.2 Write property test for management token authorization
 
   - **Property 12: Management token grants edit access**
   - **Validates: Requirements 7.2, 8.3**
 
-- [ ] 12.3 Implement update functionality
+- [x] 12.3 Implement update functionality
 
   - Save changes to event details
   - Add/edit/delete signup items
@@ -275,8 +275,8 @@
   - Show success messages after updates
   - _Requirements: 7.3_
 
-- [ ] 13. Implement EditClaimPage
-- [ ] 13.1 Create page component for editing claim
+- [x] 13. Implement EditClaimPage
+- [x] 13.1 Create page component for editing claim
 
   - Validate claim token from URL params
   - Fetch claim data
@@ -284,12 +284,12 @@
   - Handle unauthorized access (invalid token)
   - _Requirements: 9.1, 9.2_
 
-- [ ] 13.2 Write property test for claim token authorization
+- [x] 13.2 Write property test for claim token authorization
 
   - **Property 15: Claim token grants claim edit access**
   - **Validates: Requirements 9.2**
 
-- [ ] 13.3 Implement update and cancel functionality
+- [x] 13.3 Implement update and cancel functionality
 
   - Save changes to claim details
   - Implement cancel claim button
