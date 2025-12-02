@@ -114,24 +114,24 @@
   - **Property 17: Claim edit preserves quantity**
   - **Validates: Requirements 9.3**
 
-- [ ] 6. Implement availability calculation logic
-- [ ] 6.1 Create function to calculate available quantity
+- [x] 6. Implement availability calculation logic
+- [x] 6.1 Create function to calculate available quantity
 
   - Implement logic: available = quantityNeeded - claimCount
   - Handle edge cases (negative values, null checks)
   - _Requirements: 4.3, 5.4_
 
-- [ ] 6.2 Write property test for available quantity calculation
+- [x] 6.2 Write property test for available quantity calculation
 
   - **Property 6: Available quantity calculation**
   - **Validates: Requirements 4.3, 5.4**
 
-- [ ] 6.3 Create function to check if item is full
+- [x] 6.3 Create function to check if item is full
 
   - Implement validation to prevent claims when quantity is zero
   - _Requirements: 5.5_
 
-- [ ] 6.4 Write property test for full items reject claims
+- [x] 6.4 Write property test for full items reject claims
 
   - **Property 8: Full items reject new claims**
   - **Validates: Requirements 5.5**
