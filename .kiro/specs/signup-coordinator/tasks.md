@@ -54,25 +54,25 @@
   - Handle timezone considerations
   - _Requirements: 1.2_
 
-- [ ] 5. Implement database service layer
-- [ ] 5.1 Create signup sheet CRUD operations
+- [x] 5. Implement database service layer
+- [x] 5.1 Create signup sheet CRUD operations
 
   - Implement createSignupSheet function
   - Implement getSignupSheet function
   - Implement updateSignupSheet function
   - _Requirements: 1.2, 1.4, 7.3_
 
-- [ ] 5.2 Write property test for signup sheet round-trip
+- [x] 5.2 Write property test for signup sheet round-trip
 
   - **Property 1: Signup sheet data round-trip**
   - **Validates: Requirements 1.2, 1.4**
 
-- [ ] 5.3 Write property test for sheet updates persist
+- [x] 5.3 Write property test for sheet updates persist
 
   - **Property 13: Sheet updates persist**
   - **Validates: Requirements 7.3**
 
-- [ ] 5.4 Create signup item CRUD operations
+- [x] 5.4 Create signup item CRUD operations
 
   - Implement createSignupItem function
   - Implement getSignupItemsBySheetId function
@@ -80,12 +80,12 @@
   - Implement deleteSignupItem function
   - _Requirements: 2.1, 2.2, 2.3_
 
-- [ ] 5.5 Write property test for signup items persist
+- [x] 5.5 Write property test for signup items persist
 
   - **Property 3: Signup items persist with configuration**
   - **Validates: Requirements 2.1, 2.2, 2.3**
 
-- [ ] 5.6 Create claim CRUD operations
+- [x] 5.6 Create claim CRUD operations
 
   - Implement createClaim function with quantity validation
   - Implement getClaimsByItemId function
@@ -94,22 +94,22 @@
   - Implement deleteClaim function
   - _Requirements: 5.2, 5.3, 5.4, 9.2, 9.3, 9.4_
 
-- [ ] 5.7 Write property test for claim round-trip
+- [x] 5.7 Write property test for claim round-trip
 
   - **Property 10: Claim data round-trip**
   - **Validates: Requirements 5.3**
 
-- [ ] 5.8 Write property test for claim submission decreases availability
+- [x] 5.8 Write property test for claim submission decreases availability
 
   - **Property 7: Claim submission decreases availability**
   - **Validates: Requirements 5.4**
 
-- [ ] 5.9 Write property test for claim cancellation restores quantity
+- [x] 5.9 Write property test for claim cancellation restores quantity
 
   - **Property 16: Claim cancellation restores quantity**
   - **Validates: Requirements 9.4**
 
-- [ ] 5.10 Write property test for claim edit preserves quantity
+- [x] 5.10 Write property test for claim edit preserves quantity
 
   - **Property 17: Claim edit preserves quantity**
   - **Validates: Requirements 9.3**
