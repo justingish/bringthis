@@ -148,7 +148,7 @@
   - **Property 9: Required field validation**
   - **Validates: Requirements 5.2**
 
-- [ ] 8. Setup routing with React Router v7
+- [x] 8. Setup routing with React Router v7
 
   - Configure router with routes for all pages
   - Setup route for CreateSignupPage (/)
@@ -158,14 +158,14 @@
   - Setup 404 Not Found page
   - _Requirements: 1.1, 4.1, 7.2, 9.2_
 
-- [ ] 9. Implement shared components
-- [ ] 9.1 Create EventHeader component
+- [x] 9. Implement shared components
+- [x] 9.1 Create EventHeader component
 
   - Display event title, formatted date, and description
   - Style with Tailwind CSS
   - _Requirements: 4.1_
 
-- [ ] 9.2 Create ItemCard component
+- [x] 9.2 Create ItemCard component
 
   - Display item name, quantity needed/remaining
   - Show list of existing claims with guest information
@@ -173,13 +173,13 @@
   - Handle click events for claiming
   - _Requirements: 4.2, 4.3, 4.4_
 
-- [ ] 9.3 Create SignupItemList component
+- [x] 9.3 Create SignupItemList component
 
   - Render list of ItemCard components
   - Handle empty state
   - _Requirements: 4.2_
 
-- [ ] 9.4 Create ClaimForm component
+- [x] 9.4 Create ClaimForm component
 
   - Dynamically render fields based on item requirements
   - Implement form validation
@@ -187,7 +187,7 @@
   - Display validation errors
   - _Requirements: 2.4, 5.1, 5.2_
 
-- [ ] 9.5 Write property test for claim form matches requirements
+- [x] 9.5 Write property test for claim form matches requirements
 
   - **Property 4: Claim form matches item requirements**
   - **Validates: Requirements 2.4, 5.1**
