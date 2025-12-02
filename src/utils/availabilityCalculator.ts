@@ -1,4 +1,4 @@
-import { SignupItem, Claim } from '../types';
+import type { SignupItem, Claim } from '../types';
 
 /**
  * Calculates the available quantity for a signup item

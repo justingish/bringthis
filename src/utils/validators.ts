@@ -57,3 +57,58 @@ export function isValidEmail(email: string): boolean {
 export function sanitizeInput(input: string): string {
   return escapeHtml(input.trim());
 }
+
+/**
+ * Validation errors for claim form fields.
+ */
+export interface ClaimFormValidationErrors {
+  guestName?: string;
+  guestContact?: string;
+  itemDetails?: string;
+}
+
+/**
+ * Validates claim form data based on item requirements.
+ * Returns an object with error messages for each invalid field.
+ *
+ * @param formData - The claim form data to validate
+ * @param itemRequirements - The item's field requirements
+ * @returns An object with error messages for invalid fields, or empty object if valid
+ */
+export function validateClaimForm(
+  formData: {
+    guestName?: string;
+    guestContact?: string;
+    itemDetails?: string;
+  },
+  itemRequirements: {
+    requireName: boolean;
+    requireContact: boolean;
+    requireItemDetails: boolean;
+  }
+): ClaimFormValidationErrors {
+  const errors: ClaimFormValidationErrors = {};
+
+  // Validate guest name if required
+  if (itemRequirements.requireName && !isNonEmptyString(formData.guestName)) {
+    errors.guestName = 'Name is required';
+  }
+
+  // Validate guest contact if required
+  if (
+    itemRequirements.requireContact &&
+    !isNonEmptyString(formData.guestContact)
+  ) {
+    errors.guestContact = 'Contact information is required';
+  }
+
+  // Validate item details if required
+  if (
+    itemRequirements.requireItemDetails &&
+    !isNonEmptyString(formData.itemDetails)
+  ) {
+    errors.itemDetails = 'Item details are required';
+  }
+
+  return errors;
+}

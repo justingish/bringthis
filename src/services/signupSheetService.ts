@@ -1,5 +1,5 @@
 import { supabase } from '../utils/supabaseClient';
-import { SignupSheet } from '../types';
+import { type SignupSheet } from '../types';
 import { generateToken } from '../utils/tokenGenerator';
 
 // Database row type (snake_case from Postgres)

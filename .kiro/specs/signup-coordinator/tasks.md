@@ -136,14 +136,14 @@
   - **Property 8: Full items reject new claims**
   - **Validates: Requirements 5.5**
 
-- [ ] 7. Implement form validation logic
-- [ ] 7.1 Create claim form validation function
+- [x] 7. Implement form validation logic
+- [x] 7.1 Create claim form validation function
 
   - Validate required fields based on item configuration
   - Return specific error messages for each field
   - _Requirements: 5.2_
 
-- [ ] 7.2 Write property test for required field validation
+- [x] 7.2 Write property test for required field validation
 
   - **Property 9: Required field validation**
   - **Validates: Requirements 5.2**

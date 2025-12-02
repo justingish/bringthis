@@ -1,5 +1,5 @@
 import { supabase } from '../utils/supabaseClient';
-import { SignupItem } from '../types';
+import { type SignupItem } from '../types';
 
 // Database row type (snake_case from Postgres)
 interface SignupItemRow {

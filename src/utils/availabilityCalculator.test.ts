@@ -4,7 +4,7 @@ import {
   calculateAvailableQuantity,
   isItemFull,
 } from './availabilityCalculator';
-import { SignupItem, Claim } from '../types';
+import type { SignupItem, Claim } from '../types';
 
 // Arbitrary for generating signup items
 const signupItemArbitrary = fc.record({

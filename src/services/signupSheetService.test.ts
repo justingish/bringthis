@@ -69,7 +69,7 @@ describe('SignupSheet Service - Property Tests', () => {
           const created = await createSignupSheet(initialData);
 
           // Update the sheet
-          const updated = await updateSignupSheet(created.id, updateData);
+          await updateSignupSheet(created.id, updateData);
 
           // Retrieve the sheet
           const retrieved = await getSignupSheet(created.id);
