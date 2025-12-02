@@ -192,8 +192,8 @@
   - **Property 4: Claim form matches item requirements**
   - **Validates: Requirements 2.4, 5.1**
 
-- [ ] 10. Implement CreateSignupPage
-- [ ] 10.1 Create page component with form for event details
+- [x] 10. Implement CreateSignupPage
+- [x] 10.1 Create page component with form for event details
 
   - Input fields for title, date, description
   - Section for adding signup items
@@ -201,7 +201,7 @@
   - Submit button to create sheet
   - _Requirements: 1.1, 1.2, 3.1_
 
-- [ ] 10.2 Implement add signup item functionality
+- [x] 10.2 Implement add signup item functionality
 
   - Form to add item name and quantity
   - Checkboxes for field requirements (name, contact, item details)
@@ -209,7 +209,7 @@
   - Display list of added items with remove option
   - _Requirements: 2.1, 2.2_
 
-- [ ] 10.3 Implement form submission handler
+- [x] 10.3 Implement form submission handler
 
   - Validate all required fields
   - Call createSignupSheet service function
@@ -217,8 +217,8 @@
   - Handle errors and display messages
   - _Requirements: 1.3, 1.4_
 
-- [ ] 11. Implement ViewSignupPage
-- [ ] 11.1 Create page component to display signup sheet
+- [x] 11. Implement ViewSignupPage
+- [x] 11.1 Create page component to display signup sheet
 
   - Fetch signup sheet data by ID from URL params
   - Display EventHeader component
@@ -226,7 +226,7 @@
   - Handle loading and error states
   - _Requirements: 4.1, 4.2_
 
-- [ ] 11.2 Implement claim item functionality
+- [x] 11.2 Implement claim item functionality
 
   - Show ClaimForm modal when item is clicked
   - Submit claim to database
@@ -234,12 +234,12 @@
   - Display success message with claim edit link
   - _Requirements: 5.1, 5.2, 5.3_
 
-- [ ] 11.3 Write property test for data freshness
+- [x] 11.3 Write property test for data freshness
 
   - **Property 11: Data freshness on read**
   - **Validates: Requirements 6.1, 6.2**
 
-- [ ] 11.4 Implement guest add item functionality (conditional)
+- [x] 11.4 Implement guest add item functionality (conditional)
 
   - Show "Add Item" button if allowGuestAdditions is true
   - Display form to add new item
@@ -247,7 +247,7 @@
   - Refresh page data
   - _Requirements: 3.2, 3.3_
 
-- [ ] 11.5 Write property test for guest addition permission
+- [x] 11.5 Write property test for guest addition permission
 
   - **Property 5: Guest addition permission enforcement**
   - **Validates: Requirements 3.1, 3.2, 3.3**
