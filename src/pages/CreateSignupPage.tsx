@@ -111,8 +111,11 @@ export default function CreateSignupPage() {
 
       setSuccess({ viewLink, managementLink });
     } catch (err) {
+      console.error('Error creating signup sheet:', err);
       setError(
-        err instanceof Error ? err.message : 'Failed to create signup sheet'
+        err instanceof Error
+          ? err.message
+          : 'Failed to create signup sheet. Please check your internet connection and try again.'
       );
     } finally {
       setIsSubmitting(false);

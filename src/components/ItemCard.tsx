@@ -1,4 +1,4 @@
-import { SignupItem, Claim } from '../types';
+import type { SignupItem, Claim } from '../types';
 
 interface ItemCardProps {
   item: SignupItem;

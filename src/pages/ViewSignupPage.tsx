@@ -6,9 +6,13 @@ import {
   createSignupItem,
 } from '../services/signupItemService';
 import { getClaimsByItemId, createClaim } from '../services/claimService';
-import { EventHeader } from '../components/EventHeader';
-import { SignupItemList } from '../components/SignupItemList';
-import { ClaimForm } from '../components/ClaimForm';
+import {
+  EventHeader,
+  SignupItemList,
+  ClaimForm,
+  LoadingSpinner,
+  ErrorMessage,
+} from '../components';
 import type { SignupSheet, SignupItem, Claim, ClaimFormData } from '../types';
 
 export default function ViewSignupPage() {
@@ -71,7 +75,9 @@ export default function ViewSignupPage() {
       } catch (err) {
         console.error('Error fetching signup sheet:', err);
         setError(
-          err instanceof Error ? err.message : 'Failed to load signup sheet'
+          err instanceof Error
+            ? err.message
+            : 'Failed to load signup sheet. Please check your internet connection and try again.'
         );
         setLoading(false);
       }
@@ -79,6 +85,14 @@ export default function ViewSignupPage() {
 
     fetchData();
   }, [sheetId]);
+
+  // Retry function for error handling
+  const retryFetch = () => {
+    setLoading(true);
+    setError(null);
+    // Trigger re-fetch by updating a dependency or calling the fetch directly
+    window.location.reload();
+  };
 
   // Refresh data after claim submission
   const refreshData = async () => {
@@ -137,7 +151,15 @@ export default function ViewSignupPage() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
       console.error('Error creating claim:', err);
-      alert(err instanceof Error ? err.message : 'Failed to create claim');
+      // Close the modal
+      setSelectedItem(null);
+      // Show error message at the top
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'Failed to create claim. Please check your internet connection and try again.'
+      );
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
@@ -151,7 +173,7 @@ export default function ViewSignupPage() {
     e.preventDefault();
 
     if (!sheetId || !newItemData.itemName.trim()) {
-      alert('Please enter an item name');
+      setError('Please enter an item name');
       return;
     }
 
@@ -192,31 +214,35 @@ export default function ViewSignupPage() {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch (err) {
       console.error('Error adding item:', err);
-      alert(err instanceof Error ? err.message : 'Failed to add item');
+      setShowAddItemForm(false);
+      setError(
+        err instanceof Error
+          ? err.message
+          : 'Failed to add item. Please check your internet connection and try again.'
+      );
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   };
 
   // Loading state
   if (loading) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-            <p className="text-gray-600">Loading signup sheet...</p>
-          </div>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner message="Loading signup sheet..." fullScreen />;
   }
 
   // Error state
   if (error || !sheet) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-2xl mx-auto">
-          <h2 className="text-xl font-semibold text-red-800 mb-2">Error</h2>
-          <p className="text-red-700">{error || 'Signup sheet not found'}</p>
+        <div className="max-w-2xl mx-auto">
+          <ErrorMessage
+            title={!sheet ? 'Signup Sheet Not Found' : 'Error Loading Sheet'}
+            message={
+              error ||
+              'The signup sheet you are looking for does not exist or the link may be invalid.'
+            }
+            onRetry={retryFetch}
+            showHomeButton
+          />
         </div>
       </div>
     );
@@ -225,6 +251,17 @@ export default function ViewSignupPage() {
   // Main content
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
+      {/* Error message */}
+      {error && (
+        <div className="mb-6">
+          <ErrorMessage
+            message={error}
+            onDismiss={() => setError(null)}
+            onRetry={retryFetch}
+          />
+        </div>
+      )}
+
       {/* Success message */}
       {successMessage && (
         <div className="bg-green-50 border border-green-200 rounded-lg p-6 mb-6">

@@ -1,5 +1,5 @@
 import { useState, useEffect, type FormEvent } from 'react';
-import { useParams, useNavigate } from 'react-router';
+import { useParams } from 'react-router';
 import {
   getSignupSheet,
   updateSignupSheet,
@@ -11,6 +11,7 @@ import {
   deleteSignupItem,
 } from '../services/signupItemService';
 import { getClaimsByItemId } from '../services/claimService';
+import { LoadingSpinner, ErrorMessage } from '../components';
 import type { SignupSheet, Claim } from '../types';
 
 interface SignupItemForm {
@@ -28,7 +29,7 @@ export default function EditSignupPage() {
     sheetId: string;
     managementToken: string;
   }>();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // Sheet data state
   const [sheet, setSheet] = useState<SignupSheet | null>(null);
@@ -127,7 +128,9 @@ export default function EditSignupPage() {
       } catch (err) {
         console.error('Error fetching signup sheet:', err);
         setError(
-          err instanceof Error ? err.message : 'Failed to load signup sheet'
+          err instanceof Error
+            ? err.message
+            : 'Failed to load signup sheet. Please check your internet connection and try again.'
         );
         setLoading(false);
       }
@@ -135,6 +138,13 @@ export default function EditSignupPage() {
 
     fetchData();
   }, [sheetId, managementToken]);
+
+  // Retry function for error handling
+  const retryFetch = () => {
+    setLoading(true);
+    setError(null);
+    window.location.reload();
+  };
 
   // Handle event details update
   const handleUpdateEventDetails = async (e: FormEvent) => {
@@ -322,33 +332,22 @@ export default function EditSignupPage() {
 
   // Loading state
   if (loading) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mb-4"></div>
-            <p className="text-gray-600">Loading signup sheet...</p>
-          </div>
-        </div>
-      </div>
-    );
+    return <LoadingSpinner message="Loading signup sheet..." fullScreen />;
   }
 
   // Unauthorized state
   if (unauthorized) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-2xl mx-auto">
-          <h2 className="text-xl font-semibold text-red-800 mb-2">
-            Unauthorized Access
-          </h2>
-          <p className="text-red-700 mb-4">{error}</p>
-          <button
-            onClick={() => navigate('/')}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
-          >
-            Go to Home
-          </button>
+        <div className="max-w-2xl mx-auto">
+          <ErrorMessage
+            title="Unauthorized Access"
+            message={
+              error ||
+              'Invalid management token. You do not have permission to edit this sheet.'
+            }
+            showHomeButton
+          />
         </div>
       </div>
     );
@@ -358,9 +357,13 @@ export default function EditSignupPage() {
   if (!sheet) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-2xl mx-auto">
-          <h2 className="text-xl font-semibold text-red-800 mb-2">Error</h2>
-          <p className="text-red-700">{error || 'Signup sheet not found'}</p>
+        <div className="max-w-2xl mx-auto">
+          <ErrorMessage
+            title="Error Loading Sheet"
+            message={error || 'Signup sheet not found'}
+            onRetry={retryFetch}
+            showHomeButton
+          />
         </div>
       </div>
     );
