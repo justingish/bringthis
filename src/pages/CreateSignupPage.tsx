@@ -126,8 +126,16 @@ export default function CreateSignupPage() {
   if (success) {
     return (
       <div className="container mx-auto px-4 py-8 max-w-2xl">
-        <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-          <h2 className="text-2xl font-bold text-green-800 mb-4">
+        <div
+          className="bg-green-50 border border-green-200 rounded-lg p-6"
+          role="status"
+          aria-live="polite"
+          aria-labelledby="success-heading"
+        >
+          <h2
+            id="success-heading"
+            className="text-2xl font-bold text-green-800 mb-4"
+          >
             Signup Sheet Created!
           </h2>
           <div className="space-y-4">
@@ -146,7 +154,8 @@ export default function CreateSignupPage() {
                   onClick={() =>
                     navigator.clipboard.writeText(success.viewLink)
                   }
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  aria-label="Copy guest link to clipboard"
                 >
                   Copy
                 </button>
@@ -167,7 +176,8 @@ export default function CreateSignupPage() {
                   onClick={() =>
                     navigator.clipboard.writeText(success.managementLink)
                   }
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                  aria-label="Copy management link to clipboard"
                 >
                   Copy
                 </button>
@@ -175,7 +185,8 @@ export default function CreateSignupPage() {
             </div>
             <button
               onClick={() => (window.location.href = '/')}
-              className="w-full mt-4 px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700"
+              className="w-full mt-4 px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2"
+              aria-label="Create another signup sheet"
             >
               Create Another Sheet
             </button>
@@ -189,7 +200,11 @@ export default function CreateSignupPage() {
     <div className="container mx-auto px-4 py-8 max-w-2xl">
       <h1 className="text-3xl font-bold mb-6">Create Signup Sheet</h1>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form
+        onSubmit={handleSubmit}
+        className="space-y-6"
+        aria-label="Create signup sheet form"
+      >
         {/* Event Details Section */}
         <div className="bg-white rounded-lg shadow p-6 space-y-4">
           <h2 className="text-xl font-semibold mb-4">Event Details</h2>
@@ -428,7 +443,11 @@ export default function CreateSignupPage() {
 
         {/* Error Message */}
         {error && (
-          <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-800">
+          <div
+            className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-800"
+            role="alert"
+            aria-live="assertive"
+          >
             {error}
           </div>
         )}
@@ -437,7 +456,10 @@ export default function CreateSignupPage() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full px-6 py-3 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          className="w-full px-6 py-3 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          aria-label={
+            isSubmitting ? 'Creating signup sheet' : 'Create signup sheet'
+          }
         >
           {isSubmitting ? 'Creating...' : 'Create Signup Sheet'}
         </button>

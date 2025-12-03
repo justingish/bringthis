@@ -306,7 +306,7 @@
   - Handle 404 errors for invalid sheet/claim IDs
   - _Requirements: All_
 
-- [ ] 15. Implement accessibility features
+- [x] 15. Implement accessibility features
 
   - Add ARIA labels to interactive elements
   - Ensure keyboard navigation works throughout

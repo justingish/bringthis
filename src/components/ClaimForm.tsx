@@ -63,13 +63,25 @@ export function ClaimForm({ item, onSubmit, onCancel }: ClaimFormProps) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="claim-form-title"
+    >
       <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">
+        <h2
+          id="claim-form-title"
+          className="text-2xl font-bold text-gray-900 mb-4"
+        >
           Claim: {item.itemName}
         </h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4"
+          aria-label="Claim item form"
+        >
           {/* Guest Name field - conditionally rendered */}
           {item.requireName && (
             <div>
@@ -93,7 +105,13 @@ export function ClaimForm({ item, onSubmit, onCancel }: ClaimFormProps) {
                 disabled={isSubmitting}
               />
               {errors.guestName && (
-                <p className="text-red-500 text-sm mt-1">{errors.guestName}</p>
+                <p
+                  className="text-red-500 text-sm mt-1"
+                  role="alert"
+                  aria-live="polite"
+                >
+                  {errors.guestName}
+                </p>
               )}
             </div>
           )}
@@ -122,7 +140,11 @@ export function ClaimForm({ item, onSubmit, onCancel }: ClaimFormProps) {
                 disabled={isSubmitting}
               />
               {errors.guestContact && (
-                <p className="text-red-500 text-sm mt-1">
+                <p
+                  className="text-red-500 text-sm mt-1"
+                  role="alert"
+                  aria-live="polite"
+                >
                   {errors.guestContact}
                 </p>
               )}
@@ -155,7 +177,11 @@ export function ClaimForm({ item, onSubmit, onCancel }: ClaimFormProps) {
                 disabled={isSubmitting}
               />
               {errors.itemDetails && (
-                <p className="text-red-500 text-sm mt-1">
+                <p
+                  className="text-red-500 text-sm mt-1"
+                  role="alert"
+                  aria-live="polite"
+                >
                   {errors.itemDetails}
                 </p>
               )}
@@ -167,15 +193,17 @@ export function ClaimForm({ item, onSubmit, onCancel }: ClaimFormProps) {
             <button
               type="button"
               onClick={onCancel}
-              className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors"
+              className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               disabled={isSubmitting}
+              aria-label="Cancel claim"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:bg-blue-400"
+              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors disabled:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
               disabled={isSubmitting}
+              aria-label={isSubmitting ? 'Submitting claim' : 'Submit claim'}
             >
               {isSubmitting ? 'Submitting...' : 'Submit Claim'}
             </button>

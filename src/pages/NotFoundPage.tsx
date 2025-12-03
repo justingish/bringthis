@@ -2,8 +2,13 @@ import { Link } from 'react-router';
 
 export default function NotFoundPage() {
   return (
-    <div className="container mx-auto px-4 py-8 text-center">
-      <h1 className="text-6xl font-bold text-gray-800 mb-4">404</h1>
+    <div className="container mx-auto px-4 py-8 text-center" role="main">
+      <h1
+        className="text-6xl font-bold text-gray-800 mb-4"
+        aria-label="Error 404"
+      >
+        404
+      </h1>
       <h2 className="text-2xl font-semibold text-gray-700 mb-4">
         Page Not Found
       </h2>
@@ -12,7 +17,8 @@ export default function NotFoundPage() {
       </p>
       <Link
         to="/"
-        className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+        className="inline-block bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+        aria-label="Go to home page to create a new signup sheet"
       >
         Create a New Signup Sheet
       </Link>

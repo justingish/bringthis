@@ -10,17 +10,22 @@ import './App.css';
 function App() {
   return (
     <ErrorBoundary>
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<CreateSignupPage />} />
-          <Route path="/sheet/:sheetId" element={<ViewSignupPage />} />
-          <Route
-            path="/sheet/:sheetId/edit/:managementToken"
-            element={<EditSignupPage />}
-          />
-          <Route path="/claim/:claimToken" element={<EditClaimPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
+        <div id="main-content" role="main">
+          <Routes>
+            <Route path="/" element={<CreateSignupPage />} />
+            <Route path="/sheet/:sheetId" element={<ViewSignupPage />} />
+            <Route
+              path="/sheet/:sheetId/edit/:managementToken"
+              element={<EditSignupPage />}
+            />
+            <Route path="/claim/:claimToken" element={<EditClaimPage />} />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </div>
       </BrowserRouter>
     </ErrorBoundary>
   );

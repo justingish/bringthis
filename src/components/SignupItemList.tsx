@@ -19,7 +19,11 @@ export function SignupItemList({
   // Handle empty state
   if (items.length === 0) {
     return (
-      <div className="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+      <div
+        className="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300"
+        role="status"
+        aria-label="No signup items available"
+      >
         <p className="text-gray-600 text-lg">
           No signup items yet. Add items to get started!
         </p>
@@ -37,7 +41,7 @@ export function SignupItemList({
   }, {} as Record<string, Claim[]>);
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4" role="list" aria-label="Signup items">
       {items.map((item) => (
         <ItemCard
           key={item.id}

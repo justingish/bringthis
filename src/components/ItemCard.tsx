@@ -16,7 +16,7 @@ export function ItemCard({ item, claims, onClaim }: ItemCardProps) {
   const isFull = availableCount <= 0;
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
+    <article className="bg-white rounded-lg shadow-md p-6 border border-gray-200">
       {/* Item header with name and quantity */}
       <div className="flex justify-between items-start mb-4">
         <div className="flex-1">
@@ -24,20 +24,31 @@ export function ItemCard({ item, claims, onClaim }: ItemCardProps) {
             {item.itemName}
           </h3>
           <p className="text-sm text-gray-600">
-            Needed: {item.quantityNeeded} | Remaining: {availableCount}
+            <span aria-label={`${item.quantityNeeded} needed`}>
+              Needed: {item.quantityNeeded}
+            </span>
+            {' | '}
+            <span aria-label={`${availableCount} remaining`}>
+              Remaining: {availableCount}
+            </span>
           </p>
         </div>
 
         {/* Claim button or Full indicator */}
         <div className="ml-4">
           {isFull ? (
-            <span className="inline-block px-4 py-2 bg-gray-300 text-gray-700 rounded-md font-medium">
+            <span
+              className="inline-block px-4 py-2 bg-gray-300 text-gray-700 rounded-md font-medium"
+              role="status"
+              aria-label="This item is fully claimed"
+            >
               Full
             </span>
           ) : (
             <button
               onClick={() => onClaim(item)}
-              className="px-4 py-2 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition-colors"
+              className="px-4 py-2 bg-blue-600 text-white rounded-md font-medium hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              aria-label={`Claim ${item.itemName}`}
             >
               Claim
             </button>
@@ -51,7 +62,7 @@ export function ItemCard({ item, claims, onClaim }: ItemCardProps) {
           <h4 className="text-sm font-medium text-gray-700 mb-2">
             Claimed by:
           </h4>
-          <ul className="space-y-2">
+          <ul className="space-y-2" aria-label={`Claims for ${item.itemName}`}>
             {claims.map((claim) => (
               <li key={claim.id} className="text-sm text-gray-600">
                 <span className="font-medium">{claim.guestName}</span>
@@ -68,6 +79,6 @@ export function ItemCard({ item, claims, onClaim }: ItemCardProps) {
           </ul>
         </div>
       )}
-    </div>
+    </article>
   );
 }

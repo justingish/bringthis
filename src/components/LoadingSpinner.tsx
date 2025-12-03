@@ -20,13 +20,17 @@ export function LoadingSpinner({
   };
 
   const spinner = (
-    <div className="text-center">
+    <div className="text-center" role="status" aria-live="polite">
       <div
         className={`inline-block animate-spin rounded-full border-blue-600 ${sizeClasses[size]} mb-4`}
-        role="status"
-        aria-label="Loading"
+        aria-hidden="true"
       />
-      {message && <p className="text-gray-600">{message}</p>}
+      <span className="sr-only">Loading</span>
+      {message && (
+        <p className="text-gray-600" aria-label={message}>
+          {message}
+        </p>
+      )}
     </div>
   );
 
