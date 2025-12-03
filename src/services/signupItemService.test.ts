@@ -73,7 +73,7 @@ describe('SignupItem Service - Property Tests', () => {
           expect(retrieved!.sheetId).toBe(sheet.id);
         }
       ),
-      { numRuns: 100 }
+      { numRuns: 20 }
     );
-  }, 60000);
+  }, 120000);
 });

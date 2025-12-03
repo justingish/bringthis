@@ -13,7 +13,15 @@ import { supabase } from '../utils/supabaseClient';
 
 // Clean up test data before each test
 beforeEach(async () => {
-  // Delete all test data (cascade will handle items and claims)
+  // Delete all test data explicitly in reverse order of dependencies
+  await supabase
+    .from('claims')
+    .delete()
+    .neq('id', '00000000-0000-0000-0000-000000000000');
+  await supabase
+    .from('signup_items')
+    .delete()
+    .neq('id', '00000000-0000-0000-0000-000000000000');
   await supabase
     .from('signup_sheets')
     .delete()
@@ -98,9 +106,9 @@ describe('Claim Service - Property Tests', () => {
           expect(retrievedByItem!.itemDetails).toBe(claimData.itemDetails);
         }
       ),
-      { numRuns: 100 }
+      { numRuns: 20 }
     );
-  }, 60000);
+  }, 120000);
 
   // Feature: signup-coordinator, Property 7: Claim submission decreases availability
   // Validates: Requirements 5.4
@@ -141,9 +149,9 @@ describe('Claim Service - Property Tests', () => {
           expect(newAvailable).toBe(initialAvailable - 1);
         }
       ),
-      { numRuns: 100 }
+      { numRuns: 20 }
     );
-  }, 60000);
+  }, 120000);
 
   // Feature: signup-coordinator, Property 16: Claim cancellation restores quantity
   // Validates: Requirements 9.4

@@ -324,7 +324,7 @@
   - Test deployment
   - _Requirements: 10.3, 10.4_
 
-- [ ] 17. Final checkpoint - Ensure all tests pass
+- [-] 17. Final checkpoint - Ensure all tests pass
   - Run all unit tests and property-based tests
   - Fix any failing tests
   - Verify all correctness properties are validated
