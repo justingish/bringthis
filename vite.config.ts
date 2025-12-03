@@ -6,7 +6,6 @@ import react from '@vitejs/plugin-react';
 export default defineConfig(({ mode }) => {
   // Load env file based on mode
   // For tests, we'll use .env.test
-  const envFile = mode === 'test' ? '.env.test' : '.env';
   const env = loadEnv(mode, process.cwd(), '');
 
   return {

@@ -396,15 +396,17 @@ export default function ViewSignupPage() {
                   type="number"
                   id="quantityNeeded"
                   min="1"
-                  value={newItemData.quantityNeeded}
+                  value={newItemData.quantityNeeded ?? ''}
                   onChange={(e) =>
                     setNewItemData({
                       ...newItemData,
-                      quantityNeeded: parseInt(e.target.value) || undefined,
+                      quantityNeeded:
+                        e.target.value === ''
+                          ? undefined
+                          : parseInt(e.target.value) || undefined,
                     })
                   }
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  required
                 />
               </div>
 

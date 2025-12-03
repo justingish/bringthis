@@ -1,14 +1,7 @@
 import { useState, type FormEvent } from 'react';
 import { createSignupSheet } from '../services/signupSheetService';
 import { createSignupItem } from '../services/signupItemService';
-
-interface SignupItemForm {
-  itemName: string;
-  quantityNeeded: number;
-  requireName: boolean;
-  requireContact: boolean;
-  requireItemDetails: boolean;
-}
+import type { SignupItemForm } from '../types';
 
 export default function CreateSignupPage() {
   // Event details state
@@ -21,7 +14,7 @@ export default function CreateSignupPage() {
   const [items, setItems] = useState<SignupItemForm[]>([]);
   const [currentItem, setCurrentItem] = useState<SignupItemForm>({
     itemName: '',
-    quantityNeeded: 1,
+    quantityNeeded: undefined,
     requireName: true,
     requireContact: false,
     requireItemDetails: false,
@@ -41,15 +34,15 @@ export default function CreateSignupPage() {
       setError('Item name is required');
       return;
     }
-    if (currentItem.quantityNeeded < 1) {
-      setError('Quantity must be at least 1');
+    if (!currentItem.quantityNeeded) {
+      setError('Please enter an item quantity');
       return;
     }
 
     setItems([...items, currentItem]);
     setCurrentItem({
       itemName: '',
-      quantityNeeded: 1,
+      quantityNeeded: undefined,
       requireName: true,
       requireContact: false,
       requireItemDetails: false,
@@ -94,13 +87,18 @@ export default function CreateSignupPage() {
 
       // Create signup items
       for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        // Type assertion is safe here because we validate quantityNeeded before adding items to the array
+        if (!item.quantityNeeded) {
+          throw new Error(`Item "${item.itemName}" is missing a quantity`);
+        }
         await createSignupItem({
           sheetId: sheet.id,
-          itemName: items[i].itemName.trim(),
-          quantityNeeded: items[i].quantityNeeded,
-          requireName: items[i].requireName,
-          requireContact: items[i].requireContact,
-          requireItemDetails: items[i].requireItemDetails,
+          itemName: item.itemName.trim(),
+          quantityNeeded: item.quantityNeeded,
+          requireName: item.requireName,
+          requireContact: item.requireContact,
+          requireItemDetails: item.requireItemDetails,
           displayOrder: i,
         });
       }
@@ -313,11 +311,14 @@ export default function CreateSignupPage() {
               <input
                 type="number"
                 id="quantityNeeded"
-                value={currentItem.quantityNeeded}
+                value={currentItem.quantityNeeded ?? ''}
                 onChange={(e) =>
                   setCurrentItem({
                     ...currentItem,
-                    quantityNeeded: parseInt(e.target.value) || 1,
+                    quantityNeeded:
+                      e.target.value === ''
+                        ? undefined
+                        : parseInt(e.target.value) || undefined,
                   })
                 }
                 min="1"

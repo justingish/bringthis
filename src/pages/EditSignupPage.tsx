@@ -14,6 +14,12 @@ import { getClaimsByItemId } from '../services/claimService';
 import { LoadingSpinner, ErrorMessage } from '../components';
 import type { SignupSheet, Claim, SignupItemForm } from '../types';
 
+// Extended type for items in EditSignupPage that includes id and displayOrder
+type EditableSignupItem = SignupItemForm & {
+  id: string;
+  displayOrder: number;
+};
+
 export default function EditSignupPage() {
   const { sheetId, managementToken } = useParams<{
     sheetId: string;
@@ -23,7 +29,7 @@ export default function EditSignupPage() {
 
   // Sheet data state
   const [sheet, setSheet] = useState<SignupSheet | null>(null);
-  const [items, setItems] = useState<SignupItemForm[]>([]);
+  const [items, setItems] = useState<EditableSignupItem[]>([]);
   const [claims, setClaims] = useState<Claim[]>([]);
 
   // Form state
@@ -36,11 +42,10 @@ export default function EditSignupPage() {
   const [showAddItemForm, setShowAddItemForm] = useState(false);
   const [newItem, setNewItem] = useState<SignupItemForm>({
     itemName: '',
-    quantityNeeded: 1,
+    quantityNeeded: undefined,
     requireName: true,
     requireContact: false,
     requireItemDetails: false,
-    displayOrder: 0,
   });
 
   // Edit item state
@@ -183,8 +188,8 @@ export default function EditSignupPage() {
       setError('Item name is required');
       return;
     }
-    if (newItem.quantityNeeded < 1) {
-      setError('Quantity must be at least 1');
+    if (!newItem.quantityNeeded) {
+      setError('Please enter an item quantity');
       return;
     }
 
@@ -196,6 +201,11 @@ export default function EditSignupPage() {
         items.length > 0
           ? Math.max(...items.map((item) => item.displayOrder))
           : -1;
+
+      // Type assertion is safe here because we validate quantityNeeded before calling this function
+      if (!newItem.quantityNeeded) {
+        throw new Error('Quantity is required');
+      }
 
       const createdItem = await createSignupItem({
         sheetId,
@@ -222,11 +232,10 @@ export default function EditSignupPage() {
 
       setNewItem({
         itemName: '',
-        quantityNeeded: 1,
+        quantityNeeded: undefined,
         requireName: true,
         requireContact: false,
         requireItemDetails: false,
-        displayOrder: 0,
       });
       setShowAddItemForm(false);
       setSuccessMessage('Item added successfully!');
@@ -239,8 +248,8 @@ export default function EditSignupPage() {
   };
 
   // Handle edit item
-  const handleStartEditItem = (item: SignupItemForm) => {
-    setEditingItemId(item.id || null);
+  const handleStartEditItem = (item: EditableSignupItem) => {
+    setEditingItemId(item.id);
     setEditItemData({ ...item });
   };
 
@@ -251,8 +260,8 @@ export default function EditSignupPage() {
       setError('Item name is required');
       return;
     }
-    if (editItemData.quantityNeeded < 1) {
-      setError('Quantity must be at least 1');
+    if (!editItemData.quantityNeeded) {
+      setError('Please enter an item quantity');
       return;
     }
 
@@ -260,6 +269,11 @@ export default function EditSignupPage() {
     setError(null);
 
     try {
+      // Type assertion is safe here because we validate quantityNeeded before calling this function
+      if (!editItemData.quantityNeeded) {
+        throw new Error('Quantity is required');
+      }
+
       await updateSignupItem(editingItemId, {
         itemName: editItemData.itemName.trim(),
         quantityNeeded: editItemData.quantityNeeded,
@@ -270,7 +284,13 @@ export default function EditSignupPage() {
 
       setItems(
         items.map((item) =>
-          item.id === editingItemId ? { ...editItemData } : item
+          item.id === editingItemId
+            ? {
+                ...editItemData,
+                id: item.id,
+                displayOrder: item.displayOrder,
+              }
+            : item
         )
       );
 
@@ -318,6 +338,11 @@ export default function EditSignupPage() {
   // Get claims for a specific item
   const getClaimsForItem = (itemId: string): Claim[] => {
     return claims.filter((claim) => claim.itemId === itemId);
+  };
+
+  // Helper to get quantity needed with fallback
+  const getQuantityNeeded = (item: EditableSignupItem): number => {
+    return item.quantityNeeded ?? 0;
   };
 
   // Loading state
@@ -512,11 +537,14 @@ export default function EditSignupPage() {
                       <input
                         type="number"
                         min="1"
-                        value={editItemData.quantityNeeded}
+                        value={editItemData.quantityNeeded ?? ''}
                         onChange={(e) =>
                           setEditItemData({
                             ...editItemData,
-                            quantityNeeded: parseInt(e.target.value) || 1,
+                            quantityNeeded:
+                              e.target.value === ''
+                                ? undefined
+                                : parseInt(e.target.value) || undefined,
                           })
                         }
                         className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -605,9 +633,9 @@ export default function EditSignupPage() {
                           {item.itemName}
                         </h3>
                         <p className="text-sm text-gray-600">
-                          Quantity: {item.quantityNeeded} | Claimed:{' '}
+                          Quantity: {getQuantityNeeded(item)} | Claimed:{' '}
                           {itemClaims.length} | Available:{' '}
-                          {item.quantityNeeded - itemClaims.length}
+                          {getQuantityNeeded(item) - itemClaims.length}
                         </p>
                         <p className="text-sm text-gray-600">
                           Requires:{' '}
@@ -709,11 +737,14 @@ export default function EditSignupPage() {
               <input
                 type="number"
                 min="1"
-                value={newItem.quantityNeeded}
+                value={newItem.quantityNeeded ?? ''}
                 onChange={(e) =>
                   setNewItem({
                     ...newItem,
-                    quantityNeeded: parseInt(e.target.value) || 1,
+                    quantityNeeded:
+                      e.target.value === ''
+                        ? undefined
+                        : parseInt(e.target.value) || undefined,
                   })
                 }
                 className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -780,11 +811,10 @@ export default function EditSignupPage() {
                   setShowAddItemForm(false);
                   setNewItem({
                     itemName: '',
-                    quantityNeeded: 1,
+                    quantityNeeded: undefined,
                     requireName: true,
                     requireContact: false,
                     requireItemDetails: false,
-                    displayOrder: 0,
                   });
                 }}
                 disabled={saving}
