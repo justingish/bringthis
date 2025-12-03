@@ -97,6 +97,19 @@ npm run preview
 - `VITE_SUPABASE_URL`: Your Supabase project URL
 - `VITE_SUPABASE_ANON_KEY`: Your Supabase anonymous key
 
+## Deployment
+
+This application is configured for deployment on Netlify. See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions.
+
+### Quick Deploy to Netlify
+
+1. Push your code to a Git repository
+2. Connect your repository to Netlify
+3. Configure environment variables in Netlify dashboard
+4. Deploy!
+
+The `netlify.toml` file contains all necessary build and routing configuration.
+
 ## License
 
 MIT
