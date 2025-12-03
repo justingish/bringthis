@@ -12,17 +12,7 @@ import {
 } from '../services/signupItemService';
 import { getClaimsByItemId } from '../services/claimService';
 import { LoadingSpinner, ErrorMessage } from '../components';
-import type { SignupSheet, Claim } from '../types';
-
-interface SignupItemForm {
-  id?: string;
-  itemName: string;
-  quantityNeeded: number;
-  requireName: boolean;
-  requireContact: boolean;
-  requireItemDetails: boolean;
-  displayOrder: number;
-}
+import type { SignupSheet, Claim, SignupItemForm } from '../types';
 
 export default function EditSignupPage() {
   const { sheetId, managementToken } = useParams<{

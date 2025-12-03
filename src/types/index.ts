@@ -1,3 +1,5 @@
+export type Optional<T, K extends keyof T> = Pick<Partial<T>, K> & Omit<T, K>;
+
 export interface SignupSheet {
   id: string;
   title: string;
@@ -20,6 +22,11 @@ export interface SignupItem {
   displayOrder: number;
   createdAt: Date;
 }
+
+export type SignupItemForm = Omit<
+  Optional<SignupItem, 'quantityNeeded'>,
+  'id' | 'sheetId' | 'displayOrder' | 'createdAt'
+>;
 
 export interface Claim {
   id: string;

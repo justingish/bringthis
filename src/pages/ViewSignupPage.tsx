@@ -13,7 +13,13 @@ import {
   LoadingSpinner,
   ErrorMessage,
 } from '../components';
-import type { SignupSheet, SignupItem, Claim, ClaimFormData } from '../types';
+import type {
+  SignupSheet,
+  SignupItem,
+  SignupItemForm,
+  Claim,
+  ClaimFormData,
+} from '../types';
 
 export default function ViewSignupPage() {
   const { sheetId } = useParams<{ sheetId: string }>();
@@ -27,9 +33,8 @@ export default function ViewSignupPage() {
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [claimToken, setClaimToken] = useState<string | null>(null);
   const [showAddItemForm, setShowAddItemForm] = useState(false);
-  const [newItemData, setNewItemData] = useState({
+  const [newItemData, setNewItemData] = useState<SignupItemForm>({
     itemName: '',
-    quantityNeeded: 1,
     requireName: true,
     requireContact: false,
     requireItemDetails: false,
@@ -177,6 +182,11 @@ export default function ViewSignupPage() {
       return;
     }
 
+    if (!newItemData.quantityNeeded) {
+      setError('Please enter an item quantity');
+      return;
+    }
+
     try {
       // Get the current max display order
       const maxOrder =
@@ -198,7 +208,7 @@ export default function ViewSignupPage() {
       // Reset form and close modal
       setNewItemData({
         itemName: '',
-        quantityNeeded: 1,
+        quantityNeeded: undefined,
         requireName: true,
         requireContact: false,
         requireItemDetails: false,
@@ -390,7 +400,7 @@ export default function ViewSignupPage() {
                   onChange={(e) =>
                     setNewItemData({
                       ...newItemData,
-                      quantityNeeded: parseInt(e.target.value) || 1,
+                      quantityNeeded: parseInt(e.target.value) || undefined,
                     })
                   }
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
@@ -462,7 +472,7 @@ export default function ViewSignupPage() {
                     setShowAddItemForm(false);
                     setNewItemData({
                       itemName: '',
-                      quantityNeeded: 1,
+                      quantityNeeded: undefined,
                       requireName: true,
                       requireContact: false,
                       requireItemDetails: false,
