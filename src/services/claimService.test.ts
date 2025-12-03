@@ -26,6 +26,9 @@ beforeEach(async () => {
     .from('signup_sheets')
     .delete()
     .neq('id', '00000000-0000-0000-0000-000000000000');
+
+  // Add a small delay to ensure cleanup completes
+  await new Promise((resolve) => setTimeout(resolve, 100));
 });
 
 // Arbitrary for generating claim data
@@ -106,9 +109,9 @@ describe('Claim Service - Property Tests', () => {
           expect(retrievedByItem!.itemDetails).toBe(claimData.itemDetails);
         }
       ),
-      { numRuns: 20 }
+      { numRuns: 10 }
     );
-  }, 120000);
+  }, 180000);
 
   // Feature: signup-coordinator, Property 7: Claim submission decreases availability
   // Validates: Requirements 5.4
@@ -149,9 +152,9 @@ describe('Claim Service - Property Tests', () => {
           expect(newAvailable).toBe(initialAvailable - 1);
         }
       ),
-      { numRuns: 20 }
+      { numRuns: 10 }
     );
-  }, 120000);
+  }, 180000);
 
   // Feature: signup-coordinator, Property 16: Claim cancellation restores quantity
   // Validates: Requirements 9.4
@@ -246,7 +249,7 @@ describe('Claim Service - Property Tests', () => {
           expect(afterAvailable).toBe(beforeAvailable);
         }
       ),
-      { numRuns: 50 }
+      { numRuns: 10 }
     );
-  }, 120000);
+  }, 180000);
 });

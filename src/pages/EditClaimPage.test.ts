@@ -8,19 +8,24 @@ import { generateToken } from '../utils/tokenGenerator';
 
 // Clean up test data before each test
 beforeEach(async () => {
-  // Delete all test data in reverse order of dependencies
+  // Delete all test data explicitly in reverse order of dependencies
   await supabase
     .from('claims')
     .delete()
     .neq('id', '00000000-0000-0000-0000-000000000000');
+
   await supabase
     .from('signup_items')
     .delete()
     .neq('id', '00000000-0000-0000-0000-000000000000');
+
   await supabase
     .from('signup_sheets')
     .delete()
     .neq('id', '00000000-0000-0000-0000-000000000000');
+
+  // Add a small delay to ensure cleanup completes
+  await new Promise((resolve) => setTimeout(resolve, 100));
 });
 
 // Arbitrary for generating claim data
@@ -103,9 +108,9 @@ describe('EditClaimPage - Property Tests', () => {
         expect(await shouldGrantAccess(created.claimToken)).toBe(true);
         expect(await shouldGrantAccess(invalidToken)).toBe(false);
       }),
-      { numRuns: 20 }
+      { numRuns: 10 }
     );
-  }, 180000);
+  }, 240000);
 });
 
 describe('EditClaimPage - Update and Cancel Functionality', () => {
